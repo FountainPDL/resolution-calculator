@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FountainPDL's Resolution Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>FountainPDL's Resolution Calculator</h1>
+        <p class="subtitle">Professional Screen Resolution Analysis Tool</p>
+    </div>
+
+    <div class="container">
+        <!-- Main Input -->
+        <div class="card">
+            <h2 style="color: var(--primary-purple);">Current Resolution</h2>
+            <div class="input-row">
+                <label>Width:</label>
+                <input type="number" id="width" value="1920">
+                <label>Height:</label>
+                <input type="number" id="height" value="1080">
+                <div class="aspect-display" id="aspectRatio">16:9</div>
+            </div>
+            <button onclick="calculate()">Calculate All Resolutions</button>
+
+            <!-- Presets Dropdown -->
+            <div class="dropdown-section">
+                <div class="dropdown-header" onclick="toggleDropdown('presets')">
+                    <span style="color: var(--light-purple);">📐 Load Resolution Preset</span>
+                    <span class="arrow" id="arrow-presets">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-presets">
+                    <div class="device-category">
+                        <h4>Standard Resolutions</h4>
+                        <select id="standardPreset" onchange="loadStandardPreset()">
+                            <option value="">-- Select Resolution --</option>
+                            <option value="256,144">144p (256×144)</option>
+                            <option value="640,360">360p (640×360)</option>
+                            <option value="1280,720">720p HD (1280×720)</option>
+                            <option value="1920,1080">1080p FHD (1920×1080)</option>
+                            <option value="2560,1440">2K QHD (2560×1440)</option>
+                            <option value="3840,2160">4K UHD (3840×2160)</option>
+                            <option value="7680,4320">8K (7680×4320)</option>
+                        </select>
+                    </div>
+
+                    <div class="device-category">
+                        <h4>📱 Phones</h4>
+                        <select id="phonePreset" onchange="loadPhonePreset()">
+                            <option value="">-- Select Phone --</option>
+                            <option value="1179,2556">iPhone 15 Pro (1179×2556)</option>
+                            <option value="1284,2778">iPhone 15 Pro Max (1284×2778)</option>
+                            <option value="1170,2532">iPhone 14 Pro (1170×2532)</option>
+                            <option value="750,1334">iPhone SE (750×1334)</option>
+                            <option value="1080,2340">Samsung Galaxy S24 (1080×2340)</option>
+                            <option value="1440,3088">Samsung Galaxy S24 Ultra (1440×3088)</option>
+                            <option value="1080,2400">Google Pixel 8 (1080×2400)</option>
+                            <option value="1344,2992">Google Pixel 8 Pro (1344×2992)</option>
+                            <option value="1080,2412">OnePlus 12 (1080×2412)</option>
+                        </select>
+                    </div>
+
+                    <div class="device-category">
+                        <h4>📱 Tablets</h4>
+                        <select id="tabletPreset" onchange="loadTabletPreset()">
+                            <option value="">-- Select Tablet --</option>
+                            <option value="2048,2732">iPad Pro 12.9" (2048×2732)</option>
+                            <option value="1668,2388">iPad Pro 11" (1668×2388)</option>
+                            <option value="1640,2360">iPad Air (1640×2360)</option>
+                            <option value="2160,1620">iPad 10.9" (2160×1620)</option>
+                            <option value="1620,2160">iPad Mini (1620×2160)</option>
+                            <option value="2880,1920">Surface Pro 9 (2880×1920)</option>
+                            <option value="2560,1600">Samsung Galaxy Tab S9 (2560×1600)</option>
+                            <option value="2000,1200">Amazon Fire HD 10 (2000×1200)</option>
+                        </select>
+                    </div>
+
+                    <div class="device-category">
+                        <h4>💻 Laptops</h4>
+                        <select id="laptopPreset" onchange="loadLaptopPreset()">
+                            <option value="">-- Select Laptop --</option>
+                            <option value="3456,2234">MacBook Pro 16" (3456×2234)</option>
+                            <option value="3024,1964">MacBook Pro 14" (3024×1964)</option>
+                            <option value="2560,1664">MacBook Air 13" (2560×1664)</option>
+                            <option value="2880,1800">MacBook Air 15" (2880×1800)</option>
+                            <option value="3840,2400">Dell XPS 15 (3840×2400)</option>
+                            <option value="1920,1080">Dell XPS 13 FHD (1920×1080)</option>
+                            <option value="2256,1504">Surface Laptop 5 (2256×1504)</option>
+                            <option value="2560,1600">ThinkPad X1 Carbon (2560×1600)</option>
+                        </select>
+                    </div>
+
+                    <div class="device-category">
+                        <h4>🖥️ Monitors & Displays</h4>
+                        <select id="monitorPreset" onchange="loadMonitorPreset()">
+                            <option value="">-- Select Monitor --</option>
+                            <option value="1920,1080">Desktop FHD (1920×1080)</option>
+                            <option value="2560,1440">Desktop QHD (2560×1440)</option>
+                            <option value="3840,2160">Desktop 4K (3840×2160)</option>
+                            <option value="5120,2880">Desktop 5K (5120×2880)</option>
+                            <option value="3440,1440">Ultrawide 21:9 (3440×1440)</option>
+                            <option value="5120,1440">Super Ultrawide 32:9 (5120×1440)</option>
+                            <option value="3840,1080">Dual Monitor Setup (3840×1080)</option>
+                            <option value="5760,1080">Triple Monitor Setup (5760×1080)</option>
+                        </select>
+                    </div>
+
+                    <div class="custom-device">
+                        <h4>✏️ Custom Device</h4>
+                        <div class="device-category">
+                            <label style="display: block; margin-bottom: 0.5rem;">Width:</label>
+                            <input type="number" id="customWidth" placeholder="Enter width" style="width: 100%; margin-bottom: 1rem;">
+                        </div>
+                        <div class="device-category">
+                            <label style="display: block; margin-bottom: 0.5rem;">Height:</label>
+                            <input type="number" id="customHeight" placeholder="Enter height" style="width: 100%; margin-bottom: 1rem;">
+                        </div>
+                        <button class="secondary" onclick="loadCustomDevice()">Load Custom Resolution</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom Percentage Calculator -->
+        <div class="card">
+            <h2 style="color: var(--accent-red);">Custom Percentage Calculator</h2>
+            
+            <div class="device-category">
+                <label style="display: block; margin-bottom: 0.5rem;">Percentage:</label>
+                <input type="number" id="customPercent" value="30" step="0.1" style="width: 100%; margin-bottom: 1rem;">
+            </div>
+            <div class="button-group">
+                <button class="secondary" onclick="applyPercentage(true)">Add Percentage</button>
+                <button class="danger" onclick="applyPercentage(false)">Subtract Percentage</button>
+            </div>
+            <div id="percentResult"></div>
+
+            <!-- Reverse Calculator Dropdown -->
+            <div class="dropdown-section">
+                <div class="dropdown-header" onclick="toggleDropdown('reverse')">
+                    <span style="color: var(--accent-red);">🔄 Find Percentage Difference</span>
+                    <span class="arrow" id="arrow-reverse">▼</span>
+                </div>
+                <div class="dropdown-content" id="dropdown-reverse">
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Enter new resolution to calculate the percentage change:</p>
+                    <div class="device-category">
+                        <label style="display: block; margin-bottom: 0.5rem;">New Width:</label>
+                        <input type="number" id="reverseWidth" style="width: 100%; margin-bottom: 1rem;">
+                    </div>
+                    <div class="device-category">
+                        <label style="display: block; margin-bottom: 0.5rem;">New Height:</label>
+                        <input type="number" id="reverseHeight" style="width: 100%; margin-bottom: 1rem;">
+                    </div>
+                    <button onclick="reverseCalculate()">Calculate Difference</button>
+                    <div id="reverseResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="card">
+            <h2 style="color: var(--primary-purple);">Calculated Resolutions</h2>
+            <div class="result-grid" id="results"></div>
+        </div>
+
+        <div class="big-emoji">🙂</div>
+    </div>
+
+    <div class="footer">
+        <p>FountainPDL's Resolution Calculator © 2026</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
